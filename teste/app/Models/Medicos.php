@@ -9,10 +9,13 @@ class Medicos extends Model
 {
     use HasFactory;
 
+    protected $table = 'medicos'; 
+
     protected $fillable = [
         'nome',
         'especialidade',
         'cidade_id'
     ];
+    
 
 }

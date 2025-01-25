@@ -15,17 +15,17 @@ class ConsultasSeeder extends Seeder
      */
     public function run()
     {
-        Consulta::create([
+        Consultas::create([
             'medico_id' => 2,
             'paciente_id' => 1, 
             'data' => '2025-01-29 09:30:00',
         ]);
-        Consulta::create([
+        Consultas::create([
             'medico_id' => 6,
             'paciente_id' => 2, 
             'data' => '2025-01-30 14:30:00',
         ]);
-        Consulta::create([
+        Consultas::create([
             'medico_id' => 8,
             'paciente_id' => 3, 
             'data' => '2025-01-29 11:00:00',
