@@ -15,27 +15,25 @@ class CidadesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('cidades')->insert([
-            [
-                'nome' => 'Pelotas', 
-                'estado' => 'RS'
-            ],
-            [
-                'nome' => 'São Paulo', 
-                'estado' => 'SP'
-            ],
-            [
-                'nome' => 'Curitiba', 
-                'estado' => 'PR'
-            ],
-            [
-                'nome' => 'Rio de Janeiro', 
-                'estado' => 'RJ'
-            ], 
-            [
-                'nome' => 'Belo Horizonte', 
-                'estado' => 'MG'
-            ],
+        Cidades::create([
+            'nome' => 'Pelotas',
+            'estado' => 'RS'
+        ]);
+        Cidades::create([
+            'nome' => 'São Paulo',
+            'estado' => 'SP'
+        ]);
+        Cidades::create([
+            'nome' => 'Curitiba',
+            'estado' => 'PR'
+        ]);
+        Cidades::create([
+            'nome' => 'Rio de Janeiro',
+            'estado' => 'RJ'
+        ]);
+        Cidades::create([
+            'nome' => 'Belo Horizonte',
+            'estado' => 'MG'
         ]);
     }
 }
