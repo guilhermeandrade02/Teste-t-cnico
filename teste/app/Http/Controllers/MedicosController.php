@@ -8,6 +8,7 @@ use App\Models\Medicos;
 use App\Models\Consultas;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Validator;
 
 class MedicosController extends Controller
 {
@@ -72,11 +73,17 @@ class MedicosController extends Controller
     public function store(Request $request)
     {
         
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:255',
             'especialidade' => 'required|string|max:255',
             'cidade_id' => 'required|exists:cidades,id',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Erro de dados'
+            ], 422);
+        }
 
         try {
             $medico = Medicos::create([
@@ -101,11 +108,17 @@ class MedicosController extends Controller
     public function storeConsulta(Request $request)
     {
         
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'medico_id' => 'required|integer',
             'paciente_id' => 'required|integer',
             'data' => 'required|date',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Erro de dados'
+            ], 422);
+        }
 
         try {
             $consulta = Consultas::create([

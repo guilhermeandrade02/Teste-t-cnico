@@ -30,4 +30,10 @@ class AuthController extends Controller
 
         return response()->json(compact('token'));
     }
+
+    public function user()
+    {
+       $user = User::orderBy('name', 'asc')->get(); 
+       return response()->json($user, 200);
+    }
 }

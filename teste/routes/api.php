@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CidadesController;
 use App\Http\Controllers\MedicosController;
+use App\Http\Controllers\PacientesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,22 +18,26 @@ use App\Http\Controllers\MedicosController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
+Route::get('user', [AuthController::class, 'user']); // Lista usuarios
 Route::post('login', [AuthController::class, 'login']); // Rota para login
 
 
-//Rotas Cidadas
-Route::get('/cidades', [CidadesController::class, 'index']);
-Route::get('/cidade/{nome}', [CidadesController::class, 'mostrarPorNome']);
+Route::get('/cidades', [CidadesController::class, 'index']); //Lista as cidades
+Route::get('/cidade/{nome}', [CidadesController::class, 'mostrarPorNome']); //Busca a cidade pelo nome
 
-//Rotas Médicos
-Route::get('/medicos', [MedicosController::class, 'index']);
-Route::get('/medicos/{nome}', [MedicosController::class, 'mostrarPorNome']);
-Route::get('/cidades/{id_cidade}/medicos', [MedicosController::class, 'mostrarPorCidade']);
-Route::get('/cidades/medicos/{nome}', [MedicosController::class, 'mostrarPorNomeCidade']);
-Route::post('/medicos', [MedicosController::class, 'store']);
-Route::middleware('auth:api')->post('/medicos/consulta', [MedicosController::class, 'storeConsulta']);
 
+Route::get('/medicos', [MedicosController::class, 'index']); //Lista os médicos
+Route::get('/medicos/{nome}', [MedicosController::class, 'mostrarPorNome']); //Busca o médico pelo nome
+Route::get('/cidades/{id_cidade}/medicos', [MedicosController::class, 'mostrarPorCidade']); //Busca os médicos pela ID da cidade
+Route::get('/cidades/medicos/{nome}', [MedicosController::class, 'mostrarPorNomeCidade']);  //Busca os médicos pelo nome da cidade
+
+
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('/medicos', [MedicosController::class, 'store']); // Cadastro de médico
+    Route::post('/medicos/consulta', [MedicosController::class, 'storeConsulta']); // Adicionar consulta
+    Route::get('/medicos/{id_medico}/pacientes', [PacientesController::class, 'pacienteMedico']); // Busca as consultas do médico pela ID
+    Route::get('/medicos/consulta/{nome}', [PacientesController::class, 'consultaPaciente']); //Busca pacientes da cidade pelo nome da cidade
+    Route::post('/pacientes/{id_paciente}', [PacientesController::class, 'update']); //Edita o cadastro do paciente
+    Route::post('/pacientes', [PacientesController::class, 'store']); //Adiciona um paciente
+});
